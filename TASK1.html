@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 20px;
+      }
+      input {
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        background-color: gold;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #taskList {
+        list-style-type: none;
+        padding: 0;
+      }
+      .taskItem {
+        background-color: #f1f1f1;
+        padding: 10px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .removeBtn {
+        background-color: rgb(0, 255, 106);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task Management</h1>
+    <form id="taskForm">
+      <input type="text" id="taskInput" placeholder="Enter a task" />
+      <input
+        type="text"
+        id="employeeNameInput"
+        placeholder="Enter employee name"
+      />
+      <input
+        type="text"
+        id="designationInput"
+        placeholder="Enter designation"
+      />
+      <button type="submit">Add Task</button>
+    </form>
+    <ul id="taskList"></ul>
+
+    <script>
+      const taskForm = document.getElementById("taskForm");
+      const taskInput = document.getElementById("taskInput");
+      const employeeNameInput = document.getElementById("employeeNameInput");
+      const designationInput = document.getElementById("designationInput");
+      const taskList = document.getElementById("taskList");
+
+      taskForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        addTask(
+          taskInput.value,
+          employeeNameInput.value,
+          designationInput.value
+        );
+        taskInput.value = "";
+        employeeNameInput.value = "";
+        designationInput.value = "";
+      });
+
+      function addTask(taskText, employeeName, designation) {
+        const taskItem = document.createElement("li");
+        taskItem.classList.add("taskItem");
+
+        const taskInfo = document.createElement("div");
+        taskInfo.innerHTML = `
+        <strong>Task:</strong> ${taskText}<br>
+        <strong>Employee:</strong> ${employeeName}<br>
+        <strong>Designation:</strong> ${designation}
+      `;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.classList.add("removeBtn");
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", () => {
+          taskList.removeChild(taskItem);
+        });
+
+        taskItem.appendChild(taskInfo);
+        taskItem.appendChild(removeBtn);
+        taskList.appendChild(taskItem);
+      }
+    </script>
+  </body>
+</html>
